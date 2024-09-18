@@ -21,6 +21,7 @@ bool esAnaloga = false;
 int *pPendiente = 0;
 int pendiente = 0;
 int C = 0;
+int contadortrue=0;
 
 void liberarMemoria() {
     delete pFrecuencia;
@@ -88,6 +89,7 @@ void loop() {
                 
                 if (i >= 2 && lecturas[i] == lecturas[i-1] && lecturas[i-1] == lecturas[i-2]) {
                     sCuadrada = true;
+                  	contadortrue++;
                     
                 }
             }
@@ -95,7 +97,7 @@ void loop() {
             if (i >= 5 && lecturas[i] > 0 && lecturas[i-1] < 0) {
                 N++;
             }
-
+			
             if (digitalRead(3) == HIGH) {
                 Serial.println("Adquisicion de datos detenida por boton 2.");
                 adquiriendoDatos = false;
@@ -105,14 +107,16 @@ void loop() {
                 
  
 
-                if(C > 1) 
+                if(C > 3) 
                 {
 					sTriangular = true;
+                  	contadortrue++;
 						
                 }
                 else
                 {
 					esAnaloga = true;
+                  	contadortrue++;
                 }
 				
                 
@@ -132,7 +136,7 @@ void loop() {
                     lcd_1.print("Senal Triangular:");
                 } else if (esAnaloga) {
                     lcd_1.print("Senal Analogica:");
-                } else {
+                } else if (contadortrue >1){
                     lcd_1.print("Senal Desconocida:");
                 }
                 lcd_1.setCursor(0, 1);
@@ -151,4 +155,3 @@ void loop() {
         }
     }
 } 
-
